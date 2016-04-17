@@ -16,5 +16,10 @@ class CreateReportInstances < ActiveRecord::Migration
       t.belongs_to :noise_level_description
       t.timestamps null: false
     end
+
+    create_table :people_report_instances, id: false do |t|
+      t.belongs_to :report_instance, index: true
+      t.belongs_to :person, index: true
+    end
   end
 end

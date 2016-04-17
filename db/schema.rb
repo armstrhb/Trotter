@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(version: 20160417030213) do
   end
 
   create_table "feelings", force: :cascade do |t|
-    t.string   "name"
-    t.boolean  "positive"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",                       null: false
+    t.boolean  "positive",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "locations", force: :cascade do |t|
@@ -56,10 +56,19 @@ ActiveRecord::Schema.define(version: 20160417030213) do
     t.string   "last_name"
     t.string   "nick_name"
     t.date     "birthday"
+    t.string   "relationship_description"
     t.text     "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
+
+  create_table "people_report_instances", id: false, force: :cascade do |t|
+    t.integer "report_instance_id"
+    t.integer "person_id"
+  end
+
+  add_index "people_report_instances", ["person_id"], name: "index_people_report_instances_on_person_id"
+  add_index "people_report_instances", ["report_instance_id"], name: "index_people_report_instances_on_report_instance_id"
 
   create_table "report_daily_mornings", force: :cascade do |t|
     t.datetime "report_datetime",              null: false
