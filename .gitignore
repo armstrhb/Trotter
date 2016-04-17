@@ -16,7 +16,8 @@
 !/log/.keep
 /tmp
 
-# Ignore the seeds.rb
+# Ignore the db/seeds.rb and config/reporter-export.csv, which holds the data
 /db/seeds.rb
-
 db/seeds.rb
+/config/reporter-export.csv
+config/reporter-export.csv
