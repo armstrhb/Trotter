@@ -11,13 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417022828) do
+ActiveRecord::Schema.define(version: 20160417030213) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "name",                       null: false
     t.boolean  "is_quality", default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "eat_qualities", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "feeling_reasons", force: :cascade do |t|
@@ -39,12 +45,74 @@ ActiveRecord::Schema.define(version: 20160417022828) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "noise_level_descriptions", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "people", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "nick_name"
     t.date     "birthday"
     t.text     "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "report_daily_mornings", force: :cascade do |t|
+    t.datetime "report_datetime",              null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "noise_level"
+    t.integer  "sleep_quality_id"
+    t.float    "sleep_duration"
+    t.integer  "number_drinks",    default: 0
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "report_daily_nights", force: :cascade do |t|
+    t.datetime "report_datetime",                 null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "noise_level"
+    t.text     "what_learned"
+    t.integer  "number_coffees",  default: 0
+    t.integer  "eat_quality_id"
+    t.boolean  "exercised",       default: false
+    t.boolean  "had_boys",        default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "report_instances", force: :cascade do |t|
+    t.datetime "report_datetime",                            null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "number_photos_added",        default: 0
+    t.float    "noise_level"
+    t.integer  "number_steps_taken",         default: 0
+    t.boolean  "is_working",                 default: false
+    t.integer  "activity_id"
+    t.integer  "location_id"
+    t.integer  "feeling_id"
+    t.integer  "feeling_reason_id"
+    t.integer  "weather_id"
+    t.integer  "noise_level_description_id"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  create_table "sleep_qualities", force: :cascade do |t|
+    t.string   "name",       default: "f"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "weathers", force: :cascade do |t|
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
