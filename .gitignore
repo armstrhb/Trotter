@@ -15,3 +15,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore the seeds.rb
+/db/seeds.rb
+
+db/seeds.rb
