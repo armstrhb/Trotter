@@ -9,6 +9,7 @@ module LoadHelper
   @@noise_level_descriptions = []
   @@people = []
   @@sleep_qualities = []
+  @@most_recent_entry = nil
 
   def load_data(data_file)
     ActiveRecord::Base.logger.level = 1
@@ -20,8 +21,7 @@ module LoadHelper
       if row.length == 1
         continue
       else
-        process_row(row)
-        num_rows_processed += 1
+        num_rows_processed += process_row(row)
       end
     end
 
@@ -40,15 +40,35 @@ module LoadHelper
     @@noise_level_descriptions = NoiseLevelDescription.all
     @@people = Person.all
     @@sleep_qualities = SleepQuality.all
+
+    if ReportInstance.last != nil
+      @@most_recent_entry = ReportInstance.last.report_datetime
+    else
+      @@most_recent_entry = DateTime.new
+    end
   end
 
   def process_row(row)
+    if not is_new(row)
+      return 0
+    end
+
     if is_checkin(row)
       process_checkin(row)
     elsif is_morning_checkin(row)
       process_morning_checkin(row)
     elsif is_nightly_checkin(row)
       process_nightly_checkin(row)
+    end
+
+    return 1
+  end
+
+  def is_new(row)
+    if get_checkin_timestamp(row) > @@most_recent_entry
+      return true
+    else
+      return false
     end
   end
 
@@ -62,6 +82,8 @@ module LoadHelper
     report.location = get_location(row)
     report.feeling = get_feeling(row)
     report.feeling_reason = get_feeling_reason(row)
+
+    report.save
   end
 
   def process_morning_checkin(row)

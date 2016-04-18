@@ -6,6 +6,7 @@ class LoadController < ApplicationController
     @data_file = "config/reporter-export.csv"
     @num_rows_processed = load_data(@data_file)
 
+    @num_reports = ReportInstance.count
     @num_people = Person.count
     @num_locations = Location.count
     @num_activities = Activity.count
