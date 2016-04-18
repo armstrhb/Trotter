@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20160417030213) do
     t.float    "longitude"
     t.float    "noise_level"
     t.integer  "sleep_quality_id"
+    t.integer  "weather_id"
     t.float    "sleep_duration"
     t.integer  "number_drinks",    default: 0
     t.datetime "created_at",                   null: false
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160417030213) do
     t.text     "what_learned"
     t.integer  "number_coffees",  default: 0
     t.integer  "eat_quality_id"
+    t.integer  "weather_id"
     t.boolean  "exercised",       default: false
     t.boolean  "had_boys",        default: false
     t.datetime "created_at",                      null: false

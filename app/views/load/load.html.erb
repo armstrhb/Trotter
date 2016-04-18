@@ -1,7 +1,44 @@
 <div class="col-xs-12">
   <h1 class="page-header">Data load requested</h1>
-  <p>
-    <%= @data_file %> read in.<br/>
-    <strong><%= @num_rows_processed %></strong> rows processed.
-  </p>
+  <h4><%= @data_file %> read in</h4>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_rows_processed %></div>
+    <div class="col-xs-6">Reports processed</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_activities %></div>
+    <div class="col-xs-6">Activities</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_locations %></div>
+    <div class="col-xs-6">Locations</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_people %></div>
+    <div class="col-xs-6">People</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_feelings %></div>
+    <div class="col-xs-6">Feelings</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_feeling_reasons %></div>
+    <div class="col-xs-6">Feeling reasons</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_weathers %></div>
+    <div class="col-xs-6">Weather types</div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-right"><%= @num_noise_level_descriptions %></div>
+    <div class="col-xs-6">Noise level descriptions</div>
+  </div>
 </div>

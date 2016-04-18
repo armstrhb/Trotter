@@ -8,6 +8,7 @@ class CreateReportDailyNights < ActiveRecord::Migration
       t.text :what_learned
       t.integer :number_coffees, default: 0
       t.belongs_to :eat_quality
+      t.belongs_to :weather
       t.boolean :exercised, default: false
       t.boolean :had_boys, default: false
       t.timestamps null: false
