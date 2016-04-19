@@ -71,16 +71,19 @@ ActiveRecord::Schema.define(version: 20160417030213) do
   add_index "people_report_instances", ["report_instance_id"], name: "index_people_report_instances_on_report_instance_id"
 
   create_table "report_daily_mornings", force: :cascade do |t|
-    t.datetime "report_datetime",              null: false
+    t.datetime "report_datetime",                        null: false
     t.float    "latitude"
     t.float    "longitude"
     t.float    "noise_level"
     t.integer  "sleep_quality_id"
     t.integer  "weather_id"
     t.float    "sleep_duration"
-    t.integer  "number_drinks",    default: 0
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "number_drinks",              default: 0
+    t.integer  "number_photos_added",        default: 0
+    t.integer  "noise_level_description_id"
+    t.integer  "number_steps_taken",         default: 0
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "report_daily_nights", force: :cascade do |t|

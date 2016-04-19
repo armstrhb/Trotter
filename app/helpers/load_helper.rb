@@ -88,7 +88,13 @@ module LoadHelper
 
   def process_morning_checkin(row)
     report = ReportDailyMorning.new
-    #report = get_root_metrics(report, row)
+    report = get_root_metrics(report, row)
+
+    report.sleep_quality = get_sleep_quality(row)
+    report.sleep_duration = row["How long did you sleep?"].to_f
+    report.number_drinks = row["How much alcohol did you drink yesterday?"].to_i
+
+    report.save
   end
 
   def process_nightly_checkin(row)
@@ -98,8 +104,8 @@ module LoadHelper
 
   def get_root_metrics(report, row)
     report.report_datetime = get_checkin_timestamp(row)
-    report.latitude = row["latitude"].to_f
-    report.longitude = row["longitude"].to_f
+    report.latitude = row["Latitude"].to_f
+    report.longitude = row["Longitude"].to_f
     report.weather = get_weather(row)
     report.number_photos_added = row["Number of Photos Added"].to_i
     report.noise_level = row["Ambient Audio (dB)"]
@@ -107,6 +113,28 @@ module LoadHelper
     report.number_steps_taken = row["Number of Steps"].to_i
 
     return report
+  end
+
+  def get_sleep_quality(row)
+    sleep_quality_value = row["How did you sleep?"]
+
+    if sleep_quality_value == nil
+      return nil
+    end
+
+    sleep_quality = @@sleep_qualities.where(name: sleep_quality_value)
+
+    if sleep_quality.length > 0
+      return sleep_quality.first
+    else
+      puts "creating new sleep quality '#{sleep_quality_value}'"
+      sleep_quality = SleepQuality.new(name: sleep_quality_value)
+      sleep_quality.save
+
+      @@sleep_qualities << sleep_quality
+
+      return sleep_quality
+    end
   end
 
   def get_feeling(row)

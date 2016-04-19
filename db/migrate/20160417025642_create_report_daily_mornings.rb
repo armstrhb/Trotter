@@ -9,6 +9,9 @@ class CreateReportDailyMornings < ActiveRecord::Migration
       t.belongs_to :weather
       t.float :sleep_duration
       t.integer :number_drinks, default: 0
+      t.integer :number_photos_added, default: 0
+      t.belongs_to :noise_level_description
+      t.integer :number_steps_taken, default: 0
       t.timestamps null: false
     end
   end
