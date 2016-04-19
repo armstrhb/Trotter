@@ -16,4 +16,21 @@ class LoadController < ApplicationController
     @num_sleep_qualities = SleepQuality.count
     @num_weathers = Weather.count
   end
+
+  def reset
+    puts "load>reset invoked, resetting data"
+
+    Activity.delete_all
+    EatQuality.delete_all
+    FeelingReason.delete_all
+    Feeling.delete_all
+    Location.delete_all
+    NoiseLevelDescription.delete_all
+    Person.delete_all
+    ReportDailyMorning.delete_all
+    ReportDailyNight.delete_all
+    ReportInstance.delete_all
+    SleepQuality.delete_all
+    Weather.delete_all
+  end
 end
