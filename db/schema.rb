@@ -87,18 +87,21 @@ ActiveRecord::Schema.define(version: 20160417030213) do
   end
 
   create_table "report_daily_nights", force: :cascade do |t|
-    t.datetime "report_datetime",                 null: false
+    t.datetime "report_datetime",                            null: false
     t.float    "latitude"
     t.float    "longitude"
     t.float    "noise_level"
     t.text     "what_learned"
-    t.integer  "number_coffees",  default: 0
+    t.integer  "number_coffees",             default: 0
     t.integer  "eat_quality_id"
     t.integer  "weather_id"
-    t.boolean  "exercised",       default: false
-    t.boolean  "had_boys",        default: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "exercised",                  default: false
+    t.boolean  "had_boys",                   default: false
+    t.integer  "number_photos_added",        default: 0
+    t.integer  "noise_level_description_id"
+    t.integer  "number_steps_taken",         default: 0
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "report_instances", force: :cascade do |t|

@@ -11,6 +11,9 @@ class CreateReportDailyNights < ActiveRecord::Migration
       t.belongs_to :weather
       t.boolean :exercised, default: false
       t.boolean :had_boys, default: false
+      t.integer :number_photos_added, default: 0
+      t.belongs_to :noise_level_description
+      t.integer :number_steps_taken, default: 0      
       t.timestamps null: false
     end
   end

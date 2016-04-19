@@ -99,7 +99,15 @@ module LoadHelper
 
   def process_nightly_checkin(row)
     report = ReportDailyNight.new
-    #report = get_root_metrics(report, row)
+    report = get_root_metrics(report, row)
+
+    report.what_learned = row["What did you learn today?"]
+    report.number_coffees = row["How many coffees did you have today?"]
+    report.eat_quality = get_eat_quality(row)
+    report.exercised = get_did_exercise(row)
+    report.had_boys = get_did_have_boys(row)
+
+    report.save
   end
 
   def get_root_metrics(report, row)
@@ -113,6 +121,28 @@ module LoadHelper
     report.number_steps_taken = row["Number of Steps"].to_i
 
     return report
+  end
+
+  def get_eat_quality(row)
+    eat_quality_value = row["How did you eat?"]
+
+    if eat_quality_value == nil
+      return nil
+    end
+
+    eat_quality = @@eat_qualities.where(name: eat_quality_value)
+
+    if eat_quality.length > 0
+      return eat_quality.first
+    else
+      puts "creating new eat quality '#{eat_quality_value}'"
+      eat_quality = EatQuality.new(name: eat_quality_value)
+      eat_quality.save
+
+      @@eat_qualities << eat_quality
+
+      return eat_quality
+    end
   end
 
   def get_sleep_quality(row)
@@ -263,6 +293,22 @@ module LoadHelper
     end
 
     return people
+  end
+
+  def get_did_exercise(row)
+    if row["Did you exercise?"] == "Yes"
+      return true
+    else
+      return false
+    end
+  end
+
+  def get_did_have_boys(row)
+    if row["Did you have the boys?"] == "Yes"
+      return true
+    else
+      return false
+    end
   end
 
   def get_is_working(row)
