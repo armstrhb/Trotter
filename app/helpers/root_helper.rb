@@ -1,11 +1,11 @@
 module RootHelper
-  def get_feelings_last_seven_days
+  def get_feelings_last_days(days)
     data = Hash.new
 
     last_report_day = get_last_report_day
-    data["days"] = get_day_names_for_week(last_report_day)
-    data["data"] = get_feeling_last_seven_days_data(last_report_day)
-    puts "data: #{data["data"]}"
+    data["days"] = get_day_names_for_week(last_report_day, days)
+    data["data"] = get_feeling_last_seven_days_data(last_report_day, days)
+
     return data
   end
 
@@ -13,11 +13,11 @@ module RootHelper
     return ReportInstance.last.report_datetime.to_date
   end
 
-  def get_day_names_for_week(date)
+  def get_day_names_for_week(date, days_back)
     days = []
     days << date.strftime("%a")
 
-    (1..6).each do |n|
+    (1..(days_back - 1)).each do |n|
       day = date - n
       days << day.strftime("%a")
     end
@@ -25,14 +25,14 @@ module RootHelper
     return days.reverse
   end
 
-  def get_feeling_last_seven_days_data(date)
+  def get_feeling_last_seven_days_data(date, days)
     data = Hash.new
 
-    ReportInstance.where("report_datetime >= ?", date - 7).each do |report|
+    ReportInstance.where("report_datetime >= ?", date - days).each do |report|
       feeling = report.feeling.name
 
       if not data.key?(feeling)
-        data[feeling] = [0, 0, 0, 0, 0, 0, 0]
+        data[feeling] = Array.new(days) {|i| 0 }
       end
 
       day_index = report.report_datetime.to_date - date

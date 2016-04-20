@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'root#index'
 
+  get '/dash/:days' => 'root#index', defaults: {days: 7}
   get '/data/load' => 'load#load', as: 'load'
   get '/data/reset' => 'load#reset', as: 'reset'
 
