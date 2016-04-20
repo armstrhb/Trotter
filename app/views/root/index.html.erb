@@ -1,0 +1,126 @@
+<div class="col-xs-12">
+  <h1 class="page-header">Data about you.</h1>
+
+  <div class="row text-center">
+    <div class="col-xs-6 col-sm-2 col-md-1 col-md-offset-3">
+      <%= fa_icon "book 2x" %><br/>
+      <%= @num_reports %> reports
+    </div>
+
+    <div class="col-xs-6 col-sm-2 col-md-1">
+      <%= fa_icon "coffee 2x" %><br/>
+      <%= @num_activities %> activities
+    </div>
+
+    <div class="col-xs-6 col-sm-2 col-md-1">
+      <%= fa_icon "location-arrow 2x" %><br/>
+      <%= @num_locations %> locations
+    </div>
+
+    <div class="col-xs-6 col-sm-2 col-md-1">
+      <%= fa_icon "users 2x" %><br/>
+      <%= @num_people %> people
+    </div>
+
+    <div class="col-xs-6 col-sm-2 col-md-1">
+      <%= fa_icon "thumbs-up 2x" %><br/>
+      <%= @num_feelings %> feelings
+    </div>
+
+    <div class="col-xs-6 col-sm-2 col-md-1">
+      <%= fa_icon "cloud 2x" %><br/>
+      <%= @num_weathers %> weather types
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <h3>Feelings</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div id="feeling-last-seven-days"></div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div id="feeling-donut"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $("#feeling-last-seven-days").highcharts({
+      chart: {
+        type: 'area'
+      },
+      title: {
+        text: "Last seven days"
+      },
+      xAxis: {
+        categories: [
+          <% @feelings_last_seven_days_data["days"].each do |day| %>
+            '<%= day %>',
+          <% end %>
+        ],
+        tickmarkPlacement: 'on',
+        title: {
+          enabled: true
+        }
+      },
+      yAxis: {
+        title: {
+          text: 'Percent'
+        }
+      },
+      plotOptions: {
+        area: {
+          stacking: 'percent',
+          lineColor: '#ffffff',
+          lineWidth: 1,
+          marker: {
+            lineWidth: 1,
+            lineColor: '#ffffff'
+          }
+        }
+      },
+      series: [
+        <% @feelings_last_seven_days_data["data"].each do |key, value| %>
+          {
+            name: '<%= key %>',
+            data: [
+              <% value.each do |count| %>
+                <%= count %>,
+              <% end %>
+            ]
+          },
+        <% end %>
+      ]
+    });
+
+    $("#feeling-donut").highcharts({
+      title: {
+        text: 'Past month'
+      },
+      /*plotOptions: {
+        pie: {
+          startAngle: -90,
+          endAngle: 90,
+          center: ['50%', '75%']
+        }
+      },*/
+      series: [
+        {
+          type: 'pie',
+          name: 'Past month',
+          innerSize: '50%',
+          data: [
+            ['Happy', 10.23],
+            ['Content', 45.85],
+            ['Sad', 23.81],
+            ['Upset', 9.58],
+            ['Bored', 10.53]
+          ]
+        }
+      ]
+    });
+  });
+</script>
