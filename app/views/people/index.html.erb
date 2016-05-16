@@ -1,0 +1,28 @@
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="page-header">People</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <% @people.each do |person| %>
+        <div class="row">
+          <div class="col-xs-4">
+            <%= person.first_name%>
+            <% if person.nick_name != nil %>
+              "<%= person.nick_name%>"
+            <% end %>
+            <%= person.last_name %>
+          </div>
+          <div class="col-xs-2 text-right">
+            <%= person.report_instances.count %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-4 text-center">
+      You have <strong><%= @people.count %></strong> people in this.
+    </div>
+  </div>
+</div>

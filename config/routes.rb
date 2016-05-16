@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/dash/:days' => 'root#index', defaults: {days: 7}
   get '/data/load' => 'load#load', as: 'load'
   get '/data/reset' => 'load#reset', as: 'reset'
+  get '/people' => 'people#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
